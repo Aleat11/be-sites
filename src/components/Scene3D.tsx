@@ -39,17 +39,20 @@ function Core() {
   return (
     <group ref={group} scale={0.62}>
       {/* faceted glass shell */}
-      <Icosahedron args={[1.65, 1]}>
+      <Icosahedron args={[1.7, 1]}>
         <meshPhysicalMaterial
-          color="#ffffff"
-          roughness={0.08}
-          metalness={0.1}
-          transmission={0.98}
-          thickness={0.9}
-          ior={1.45}
+          color="#cfe9ef"
+          roughness={0.12}
+          metalness={0.65}
+          transparent
+          opacity={0.22}
           clearcoat={1}
-          envMapIntensity={1.6}
+          envMapIntensity={1.8}
         />
+      </Icosahedron>
+
+      <Icosahedron args={[1.7, 1]}>
+        <meshBasicMaterial color="#e8f7fa" wireframe transparent opacity={0.28} />
       </Icosahedron>
 
       {/* wireframe cage */}
