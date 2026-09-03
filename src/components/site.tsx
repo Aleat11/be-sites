@@ -47,20 +47,19 @@ export function Reveal({
   y?: number;
   className?: string;
 }) {
-  const ref = useRef<HTMLDivElement>(null);
-  const inView = useInView(ref, { once: true, margin: "-12% 0px" });
   return (
     <motion.div
-      ref={ref}
       className={className}
       initial={{ opacity: 0, y, filter: "blur(8px)" }}
-      animate={inView ? { opacity: 1, y: 0, filter: "blur(0px)" } : {}}
+      whileInView={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+      viewport={{ once: true, amount: 0.15 }}
       transition={{ duration: 0.75, delay, ease: [0.22, 1, 0.36, 1] }}
     >
       {children}
     </motion.div>
   );
 }
+
 
 /* Glass card with cursor spotlight + tilt */
 export function GlassCard({
