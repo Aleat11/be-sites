@@ -159,7 +159,7 @@ function Index() {
       {/* ---------- HERO ---------- */}
       <section id="top" className="relative min-h-[100svh] pb-24 pt-36">
         <div className="grid-bg absolute inset-0" aria-hidden />
-        <div className="absolute inset-0 -z-0">
+        <div className="pointer-events-none absolute inset-x-0 top-0 h-[100svh] opacity-80 [mask-image:radial-gradient(closest-side,#000_55%,transparent_92%)]">
           <ClientOnly fallback={null}>
             <Suspense fallback={null}>
               <Scene3D />

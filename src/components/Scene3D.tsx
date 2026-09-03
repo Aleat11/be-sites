@@ -37,15 +37,15 @@ function Core() {
   });
 
   return (
-    <group ref={group}>
+    <group ref={group} scale={0.62}>
       {/* faceted glass shell */}
       <Icosahedron args={[1.65, 1]}>
         <meshPhysicalMaterial
-          color="#dfe7ea"
+          color="#ffffff"
           roughness={0.08}
           metalness={0.1}
-          transmission={0.92}
-          thickness={1.6}
+          transmission={0.98}
+          thickness={0.9}
           ior={1.45}
           clearcoat={1}
           envMapIntensity={1.6}
@@ -63,7 +63,7 @@ function Core() {
         <meshStandardMaterial
           color="#0b0b0b"
           emissive="#5fd3e6"
-          emissiveIntensity={1.4}
+          emissiveIntensity={1.8}
           roughness={0.3}
           metalness={0.9}
         />
@@ -113,7 +113,7 @@ export function Scene3D() {
   return (
     <Canvas
       dpr={[1, 1.8]}
-      camera={{ position: [0, 0, 7], fov: 45 }}
+      camera={{ position: [0, 0, 9], fov: 42 }}
       gl={{ antialias: true, alpha: true }}
     >
       <ambientLight intensity={0.6} />
