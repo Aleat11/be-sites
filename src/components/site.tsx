@@ -1,4 +1,4 @@
-import { motion, useInView } from "motion/react";
+import { motion } from "motion/react";
 import { useEffect, useRef, useState, type ReactNode } from "react";
 
 /* Cursor-following ambient glow */
