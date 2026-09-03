@@ -58,7 +58,7 @@ export function Faq() {
                 {f.q}
               </span>
               <span
-                className={`relative h-5 w-5 shrink-0 transition-transform duration-500 ${isOpen ? "rotate-135" : ""}`}
+                className={`relative h-5 w-5 shrink-0 transition-transform duration-500 ${isOpen ? "rotate-[135deg]" : ""}`}
               >
                 <span className="absolute left-0 top-1/2 h-px w-5 -translate-y-1/2 bg-foreground" />
                 <span className="absolute left-1/2 top-0 h-5 w-px -translate-x-1/2 bg-foreground" />
