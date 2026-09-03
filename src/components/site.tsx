@@ -110,23 +110,23 @@ export function Eyebrow({ children }: { children: ReactNode }) {
 
 /* Count-up stat */
 export function Stat({ value, suffix = "", label }: { value: number; suffix?: string; label: string }) {
-  const ref = useRef<HTMLDivElement>(null);
-  const inView = useInView(ref, { once: true });
   const [n, setN] = useState(0);
-  useEffect(() => {
-    if (!inView) return;
+  const started = useRef(false);
+
+  const run = () => {
+    if (started.current) return;
+    started.current = true;
     const start = performance.now();
-    let id = 0;
     const tick = (t: number) => {
       const p = Math.min((t - start) / 1200, 1);
       setN(Math.round(value * (1 - Math.pow(1 - p, 3))));
-      if (p < 1) id = requestAnimationFrame(tick);
+      if (p < 1) requestAnimationFrame(tick);
     };
-    id = requestAnimationFrame(tick);
-    return () => cancelAnimationFrame(id);
-  }, [inView, value]);
+    requestAnimationFrame(tick);
+  };
+
   return (
-    <div ref={ref}>
+    <motion.div viewport={{ once: true, amount: 0.4 }} onViewportEnter={run}>
       <div className="font-display text-4xl font-semibold tracking-tight md:text-5xl">
         {n}
         <span className="text-accent">{suffix}</span>
@@ -134,6 +134,7 @@ export function Stat({ value, suffix = "", label }: { value: number; suffix?: st
       <div className="mt-1 font-mono text-[11px] uppercase tracking-[0.18em] text-muted-foreground">
         {label}
       </div>
-    </div>
+    </motion.div>
   );
 }
+
