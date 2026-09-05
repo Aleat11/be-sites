@@ -60,7 +60,7 @@ function BeMark() {
   });
 
   return (
-    <group ref={group} scale={0.92}>
+    <group ref={group} scale={0.55} position-y={-0.3}>
       <Center position={[0, 0.16, 0]}>
         <Text3D
           font={FONT_URL}
