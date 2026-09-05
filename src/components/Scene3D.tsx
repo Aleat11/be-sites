@@ -56,7 +56,7 @@ function BeMark() {
     const t = performance.now() / 1000;
     g.rotation.y = THREE.MathUtils.damp(g.rotation.y, pointer.x * 0.55 + Math.sin(t * 0.35) * 0.16, 3, dt);
     g.rotation.x = THREE.MathUtils.damp(g.rotation.x, -pointer.y * 0.32 + Math.sin(t * 0.27) * 0.06, 3, dt);
-    g.position.y = Math.sin(t * 0.6) * 0.12;
+    g.position.y = -0.3 + Math.sin(t * 0.6) * 0.12;
   });
 
   return (
