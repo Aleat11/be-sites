@@ -373,8 +373,15 @@ function Index() {
               </p>
               <form
                 className="mx-auto mt-10 flex max-w-md flex-col gap-3 sm:flex-row"
-                onSubmit={(e) => e.preventDefault()}
+                onSubmit={(e) => {
+                  e.preventDefault();
+                  const value = (
+                    e.currentTarget.elements.namedItem("email") as HTMLInputElement
+                  ).value;
+                  window.location.href = `${MAILTO}%0A%0AMy%20email:%20${encodeURIComponent(value)}`;
+                }}
               >
+
                 <label className="sr-only" htmlFor="email">
                   Email address
                 </label>
