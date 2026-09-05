@@ -44,6 +44,9 @@ export const Route = createFileRoute("/")({
   component: Index,
 });
 
+const MAILTO =
+  "mailto:antwane.leater@be-extraordinary.site?subject=Website%20enquiry%20—%20Be-Sites&body=Tell%20us%20about%20your%20business%20and%20we%27ll%20send%20back%20a%20free%20homepage%20mockup.";
+
 const nav = [
   { label: "Work", href: "#capabilities" },
   { label: "Process", href: "#process" },
@@ -148,7 +151,7 @@ function Index() {
             ))}
           </ul>
           <a
-            href="#contact"
+            href={MAILTO}
             className="btn-sheen ml-auto rounded-full bg-primary px-4 py-2 text-sm font-medium text-primary-foreground transition-transform duration-300 hover:scale-[1.04] md:ml-0"
           >
             Start a build
@@ -190,7 +193,7 @@ function Index() {
           <Reveal delay={0.24}>
             <div className="mt-10 flex flex-wrap items-center justify-center gap-3">
               <a
-                href="#contact"
+                href={MAILTO}
                 className="btn-sheen rounded-full bg-primary px-7 py-3.5 text-sm font-medium text-primary-foreground transition-transform duration-300 hover:scale-[1.04]"
               >
                 Get my site built
@@ -326,7 +329,7 @@ function Index() {
                   ))}
                 </ul>
                 <a
-                  href="#contact"
+                  href={MAILTO}
                   className={`btn-sheen mt-9 rounded-full px-5 py-3 text-center text-sm font-medium transition-transform duration-300 hover:scale-[1.03] ${
                     t.highlight
                       ? "bg-primary text-primary-foreground"
