@@ -1,82 +1,95 @@
 import { Canvas, useFrame, useThree } from "@react-three/fiber";
-import { Environment, Lightformer, Icosahedron, Torus } from "@react-three/drei";
+import { Center, Environment, Lightformer, Text3D, Torus } from "@react-three/drei";
 import { useMemo, useRef, Suspense } from "react";
 import * as THREE from "three";
+
+const FONT_URL = "/fonts/helvetiker_bold.typeface.json";
 
 function useMouse() {
   const { pointer } = useThree();
   return pointer;
 }
 
-function Core() {
+/** The bracket frame from the logo: left bar, bottom bar, right bar. */
+function Bracket() {
+  const w = 1.95; // half width
+  const h = 1.15; // half height
+  const t = 0.11; // bar thickness
+  const d = 0.42; // depth
+
+  const mat = (
+    <meshStandardMaterial
+      color="#0d1416"
+      emissive="#5fd3e6"
+      emissiveIntensity={1.15}
+      metalness={0.85}
+      roughness={0.25}
+    />
+  );
+
+  return (
+    <group>
+      <mesh position={[-w, 0, 0]}>
+        <boxGeometry args={[t, h * 2, d]} />
+        {mat}
+      </mesh>
+      <mesh position={[w, 0, 0]}>
+        <boxGeometry args={[t, h * 2, d]} />
+        {mat}
+      </mesh>
+      <mesh position={[0, -h, 0]}>
+        <boxGeometry args={[w * 2 + t, t, d]} />
+        {mat}
+      </mesh>
+    </group>
+  );
+}
+
+function BeMark() {
   const group = useRef<THREE.Group>(null);
-  const inner = useRef<THREE.Mesh>(null);
   const pointer = useMouse();
 
   useFrame((_, raw) => {
     const dt = Math.min(raw, 0.05);
-    if (!group.current) return;
-    group.current.rotation.y += dt * 0.18;
-    group.current.rotation.x = THREE.MathUtils.damp(
-      group.current.rotation.x,
-      -pointer.y * 0.35,
-      3,
-      dt,
-    );
-    group.current.rotation.z = THREE.MathUtils.damp(
-      group.current.rotation.z,
-      pointer.x * 0.2,
-      3,
-      dt,
-    );
-    if (inner.current) {
-      inner.current.rotation.y -= dt * 0.5;
-      const s = 1 + Math.sin(performance.now() / 900) * 0.03;
-      inner.current.scale.setScalar(s);
-    }
+    const g = group.current;
+    if (!g) return;
+    const t = performance.now() / 1000;
+    g.rotation.y = THREE.MathUtils.damp(g.rotation.y, pointer.x * 0.55 + Math.sin(t * 0.35) * 0.16, 3, dt);
+    g.rotation.x = THREE.MathUtils.damp(g.rotation.x, -pointer.y * 0.32 + Math.sin(t * 0.27) * 0.06, 3, dt);
+    g.position.y = Math.sin(t * 0.6) * 0.12;
   });
 
   return (
-    <group ref={group} scale={0.62}>
-      {/* faceted glass shell */}
-      <Icosahedron args={[1.7, 1]}>
-        <meshPhysicalMaterial
-          color="#cfe9ef"
-          roughness={0.12}
-          metalness={0.65}
-          transparent
-          opacity={0.22}
-          clearcoat={1}
-          envMapIntensity={1.8}
-        />
-      </Icosahedron>
+    <group ref={group} scale={0.92}>
+      <Center position={[0, 0.16, 0]}>
+        <Text3D
+          font={FONT_URL}
+          size={1.55}
+          height={0.42}
+          curveSegments={10}
+          bevelEnabled
+          bevelThickness={0.03}
+          bevelSize={0.025}
+          bevelSegments={4}
+        >
+          Be
+          <meshPhysicalMaterial
+            color="#dff2f6"
+            metalness={0.9}
+            roughness={0.16}
+            clearcoat={1}
+            envMapIntensity={1.7}
+          />
+        </Text3D>
+      </Center>
+      <Bracket />
 
-      <Icosahedron args={[1.7, 1]}>
-        <meshBasicMaterial color="#e8f7fa" wireframe transparent opacity={0.28} />
-      </Icosahedron>
-
-      {/* wireframe cage */}
-      <Icosahedron args={[2.15, 1]}>
-        <meshBasicMaterial color="#7fdce8" wireframe transparent opacity={0.22} />
-      </Icosahedron>
-
-      {/* glowing core */}
-      <mesh ref={inner}>
-        <icosahedronGeometry args={[0.72, 0]} />
-        <meshStandardMaterial
-          color="#0b0b0b"
-          emissive="#5fd3e6"
-          emissiveIntensity={1.8}
-          roughness={0.3}
-          metalness={0.9}
-        />
-      </mesh>
-
-      <Torus args={[2.7, 0.012, 8, 128]} rotation={[Math.PI / 2.2, 0.4, 0]}>
-        <meshBasicMaterial color="#9aa4a8" transparent opacity={0.55} />
+      {/* faint orbiting rings for depth */}
+      <Torus args={[3.1, 0.01, 8, 128]} rotation={[Math.PI / 2.2, 0.4, 0]}>
+        <meshBasicMaterial color="#9aa4a8" transparent opacity={0.4} />
       </Torus>
-      <Torus args={[3.1, 0.008, 8, 128]} rotation={[Math.PI / 1.7, -0.3, 0.6]}>
-        <meshBasicMaterial color="#5fd3e6" transparent opacity={0.4} />
+      <Torus args={[3.5, 0.008, 8, 128]} rotation={[Math.PI / 1.7, -0.3, 0.6]}>
+        <meshBasicMaterial color="#5fd3e6" transparent opacity={0.3} />
       </Torus>
     </group>
   );
@@ -140,7 +153,7 @@ export function Scene3D() {
             scale={[16, 3, 1]}
           />
         </Environment>
-        <Core />
+        <BeMark />
         <Dust />
       </Suspense>
     </Canvas>
