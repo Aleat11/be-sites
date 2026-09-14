@@ -16,6 +16,7 @@ function Bracket() {
   const h = 1.15; // half height
   const t = 0.11; // bar thickness
   const d = 0.42; // depth
+  const sideHeight = 0.48;
 
   const mat = (
     <meshStandardMaterial
@@ -29,12 +30,12 @@ function Bracket() {
 
   return (
     <group>
-      <mesh position={[-w, 0, 0]}>
-        <boxGeometry args={[t, h * 2, d]} />
+      <mesh position={[-w, -h + sideHeight / 2, 0]}>
+        <boxGeometry args={[t, sideHeight, d]} />
         {mat}
       </mesh>
-      <mesh position={[w, 0, 0]}>
-        <boxGeometry args={[t, h * 2, d]} />
+      <mesh position={[w, -h + sideHeight / 2, 0]}>
+        <boxGeometry args={[t, sideHeight, d]} />
         {mat}
       </mesh>
       <mesh position={[0, -h, 0]}>
