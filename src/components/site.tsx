@@ -1,4 +1,4 @@
-import { motion } from "motion/react";
+import { motion, useReducedMotion } from "motion/react";
 import { useEffect, useRef, useState, type ReactNode } from "react";
 
 /* Cursor-following ambient glow */
@@ -40,20 +40,40 @@ export function Reveal({
   children,
   delay = 0,
   y = 26,
+  x = 0,
+  scale = 0.985,
   className,
 }: {
   children: ReactNode;
   delay?: number;
   y?: number;
+  x?: number;
+  scale?: number;
   className?: string;
 }) {
+  const reducedMotion = useReducedMotion();
+
   return (
     <motion.div
       className={className}
-      initial={{ opacity: 0, y, filter: "blur(8px)" }}
-      whileInView={{ opacity: 1, y: 0, filter: "blur(0px)" }}
-      viewport={{ once: true, amount: 0.15 }}
-      transition={{ duration: 0.75, delay, ease: [0.22, 1, 0.36, 1] }}
+      initial={reducedMotion ? false : {
+        opacity: 0,
+        x,
+        y,
+        scale,
+        filter: "blur(9px)",
+        clipPath: "inset(0 0 18% 0 round 10px)",
+      }}
+      whileInView={{
+        opacity: 1,
+        x: 0,
+        y: 0,
+        scale: 1,
+        filter: "blur(0px)",
+        clipPath: "inset(0 0 0% 0 round 0px)",
+      }}
+      viewport={{ once: true, amount: 0.18, margin: "0px 0px -8% 0px" }}
+      transition={{ duration: 0.82, delay, ease: [0.16, 1, 0.3, 1] }}
     >
       {children}
     </motion.div>
@@ -109,7 +129,17 @@ export function Eyebrow({ children }: { children: ReactNode }) {
 }
 
 /* Count-up stat */
-export function Stat({ value, suffix = "", label }: { value: number; suffix?: string; label: string }) {
+export function Stat({
+  value,
+  prefix = "",
+  suffix = "",
+  label,
+}: {
+  value: number;
+  prefix?: string;
+  suffix?: string;
+  label: string;
+}) {
   const [n, setN] = useState(0);
   const started = useRef(false);
 
@@ -128,7 +158,8 @@ export function Stat({ value, suffix = "", label }: { value: number; suffix?: st
   return (
     <motion.div viewport={{ once: true, amount: 0.4 }} onViewportEnter={run}>
       <div className="font-display text-4xl font-semibold tracking-tight md:text-5xl">
-        {n}
+        <span className="text-accent">{prefix}</span>
+        {n.toLocaleString()}
         <span className="text-accent">{suffix}</span>
       </div>
       <div className="mt-1 font-mono text-[11px] uppercase tracking-[0.18em] text-muted-foreground">

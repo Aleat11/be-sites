@@ -4,16 +4,16 @@ import { GlassCard } from "./site";
 
 export const faqs = [
   {
-    q: "What exactly do I get for $899?",
-    a: "A 5–7 page site (Home, About, Services, Gallery, Contact, optional Testimonials), fully mobile-responsive, one spam-protected contact form, click-to-call, Google Maps embed, business hours, on-page SEO, LocalBusiness schema, analytics setup, deployment with your custom domain and SSL, plus one round of revisions.",
+    q: "What is included in a website project?",
+    a: "Every project is scoped around your business, services, proof, and inquiry process. You receive a clear written scope, agreed milestones, a fast mobile experience, and ownership at handoff. Website projects start at $3,500.",
   },
   {
-    q: "How fast is it live?",
-    a: "Most builds ship in 3–5 days from the moment we have your content. The build itself takes hours — the timeline is mostly you approving copy and photos. Rush delivery is available.",
+    q: "How long does a website project take?",
+    a: "Your written scope includes a clear timeline and milestones before work begins. Timing depends on the number of services, available content, and review rounds, so expectations are agreed upfront.",
   },
   {
-    q: "What is not included?",
-    a: "Copywriting (add-on, $300–$500), professional photography, e-commerce, online booking or payment integrations, and ongoing edits after the revision round. Those live in the Growth tier or the Care Plan so the starter price stays honest.",
+    q: "What is the $750 Website Conversion Sprint?",
+    a: "It is a focused engagement for one priority problem on an existing website. We review the conversion path, improve the most important page or interaction, complete a mobile quality pass, and leave you with clear next steps.",
   },
   {
     q: "Do I need to pay for hosting?",
@@ -25,7 +25,7 @@ export const faqs = [
   },
   {
     q: "How do payments work?",
-    a: "50% deposit to lock your build slot, 50% on delivery before go-live. Simple one-page agreement covering scope, deliverables, timeline, and revisions. No retainers, no lock-in.",
+    a: "Payment stages are set out in the written project scope, alongside deliverables, milestones, and review points. You know what is due and when before the project begins.",
   },
   {
     q: "Will my site actually rank on Google?",

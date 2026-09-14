@@ -11,17 +11,17 @@ const Scene3D = lazy(() =>
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "Be-Sites — Fast, Modern Websites for Small Business, $899" },
+      { title: "Be-Sites — Websites for Home-Service Businesses" },
       {
         name: "description",
         content:
-          "Be-Sites builds high-performance, mobile-first small business websites from $899. Live in days, local SEO built in, optional $79/mo care plan.",
+          "Be-Sites builds clear, fast websites for established home-service businesses. Website projects from $3,500.",
       },
-      { property: "og:title", content: "Be-Sites — Websites that load fast and win local search" },
+      { property: "og:title", content: "Be-Sites — Websites that turn local visits into inquiries" },
       {
         property: "og:description",
         content:
-          "A 5–7 page, mobile-first small business site from $899. Local SEO, schema, analytics and custom domain included.",
+          "Clear, fast websites for established home-service businesses, with service pages, proof, and a tested inquiry process.",
       },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
@@ -46,6 +46,8 @@ export const Route = createFileRoute("/")({
 
 const MAILTO =
   "mailto:antwane.leater@be-extraordinary.site?subject=Website%20enquiry%20—%20Be-Sites&body=Tell%20us%20about%20your%20business%20and%20we%27ll%20send%20back%20a%20free%20homepage%20mockup.";
+const SPRINT_MAILTO =
+  "mailto:antwane.leater@be-extraordinary.site?subject=Website%20Conversion%20Sprint%20—%20Be-Sites";
 
 const nav = [
   { label: "Work", href: "#capabilities" },
@@ -96,18 +98,18 @@ const process = [
 
 const tiers = [
   {
-    name: "Starter",
-    price: "$899",
-    note: "one-time",
+    name: "Conversion Sprint",
+    price: "$750",
+    note: "fixed scope",
     highlight: false,
-    points: ["5 pages", "1 contact form", "On-page SEO + schema", "Analytics + Search Console", "Domain, SSL, deployment", "1 revision round"],
+    points: ["One priority problem", "Conversion review", "Focused page improvements", "Inquiry-path cleanup", "Mobile quality pass", "Clear next-step plan"],
   },
   {
-    name: "Growth",
-    price: "$1,799",
-    note: "one-time",
+    name: "Website Build",
+    price: "$3,500",
+    note: "projects from",
     highlight: true,
-    points: ["Up to 10 pages", "Copywriting included", "Booking or e-commerce", "Custom motion + interactions", "Gallery / portfolio system", "2 revision rounds"],
+    points: ["Clear service pages", "Proof and trust sections", "Tested inquiry process", "Fast mobile experience", "Written scope + milestones", "Ownership at handoff"],
   },
   {
     name: "Care Plan",
@@ -154,7 +156,7 @@ function Index() {
             href={MAILTO}
             className="btn-sheen ml-auto rounded-full bg-primary px-4 py-2 text-sm font-medium text-primary-foreground transition-transform duration-300 hover:scale-[1.04] md:ml-0"
           >
-            Start a build
+            Discuss my website
           </a>
         </nav>
       </header>
@@ -162,7 +164,7 @@ function Index() {
       {/* ---------- HERO ---------- */}
       <section id="top" className="relative min-h-[100svh] pb-24 pt-36">
         <div className="grid-bg absolute inset-0" aria-hidden />
-        <div className="pointer-events-none absolute inset-x-0 top-0 h-[100svh] opacity-80 [mask-image:radial-gradient(closest-side,#000_55%,transparent_92%)]">
+        <div className="pointer-events-none absolute inset-x-0 top-[18svh] h-[82svh] opacity-55 [mask-image:radial-gradient(closest-side,#000_48%,transparent_90%)] md:top-[8svh] md:h-[92svh]">
           <ClientOnly fallback={null}>
             <Suspense fallback={null}>
               <Scene3D />
@@ -170,25 +172,26 @@ function Index() {
           </ClientOnly>
         </div>
 
-        <div className="relative z-10 mx-auto max-w-6xl px-5 text-center">
+        <div className="relative z-10 mx-auto max-w-6xl px-5 text-center [text-shadow:0_2px_24px_var(--color-background)]">
           <Reveal>
-            <Eyebrow>Website studio — building since 2026</Eyebrow>
+            <Eyebrow>Websites for home-service businesses</Eyebrow>
           </Reveal>
           <Reveal delay={0.08}>
-            <h1 className="mt-7 font-display text-[clamp(2.6rem,8vw,6.2rem)] font-semibold leading-[0.95] tracking-[-0.04em]">
-              <span className="text-gradient block">Websites that</span>
-              <span className="block">
-                <Kinetic>load fast</Kinetic>{" "}
-                <span className="text-muted-foreground">&</span>{" "}
-                <Kinetic>get found</Kinetic>
-              </span>
+            <h1 className="mx-auto mt-7 max-w-5xl font-display text-[clamp(2.5rem,7vw,5.7rem)] font-semibold leading-[0.98] tracking-[-0.04em]">
+              <span className="text-foreground">Websites that make it easier for local customers to request a quote.</span>
             </h1>
           </Reveal>
           <Reveal delay={0.16}>
-            <p className="mx-auto mt-7 max-w-xl text-balance text-base leading-relaxed text-muted-foreground md:text-lg">
-              Be-Sites designs and ships high-performance small business websites — mobile-first,
-              local-SEO-ready, live in days. From <span className="text-foreground">$899</span>.
-            </p>
+            <div className="mx-auto mt-7 max-w-2xl space-y-3 text-balance text-base leading-relaxed text-foreground/80 md:text-lg">
+              <p>
+                Be-Sites builds clear, fast websites for established home-service businesses—with
+                service pages, proof, and a tested inquiry process.
+              </p>
+              <p className="text-sm text-foreground/70 md:text-base">
+                Website projects from <span className="font-medium text-foreground">$3,500</span>.
+                Written scope, clear milestones, and ownership at handoff.
+              </p>
+            </div>
           </Reveal>
           <Reveal delay={0.24}>
             <div className="mt-10 flex flex-wrap items-center justify-center gap-3">
@@ -196,15 +199,17 @@ function Index() {
                 href={MAILTO}
                 className="btn-sheen rounded-full bg-primary px-7 py-3.5 text-sm font-medium text-primary-foreground transition-transform duration-300 hover:scale-[1.04]"
               >
-                Get my site built
-              </a>
-              <a
-                href="#pricing"
-                className="glass edge-lit rounded-full px-7 py-3.5 text-sm font-medium transition-transform duration-300 hover:scale-[1.04]"
-              >
-                See pricing
+                Discuss my website
               </a>
             </div>
+          </Reveal>
+          <Reveal delay={0.3}>
+            <p className="mt-5 text-sm text-foreground/70">
+              Need one problem fixed first?{" "}
+              <a href={SPRINT_MAILTO} className="font-medium text-foreground underline decoration-accent/60 underline-offset-4 transition-colors hover:text-accent">
+                Explore the $750 Website Conversion Sprint.
+              </a>
+            </p>
           </Reveal>
         </div>
 
@@ -230,13 +235,13 @@ function Index() {
       <section className="mx-auto max-w-6xl px-5 py-24">
         <div className="grid grid-cols-2 gap-10 md:grid-cols-4">
           {[
-            { v: 899, s: "$", l: "Starter build" },
-            { v: 4, s: " days", l: "Average go-live" },
-            { v: 100, s: "%", l: "Mobile responsive" },
-            { v: 2, s: ".5s", l: "Load time ceiling" },
+            { v: 3500, p: "$", s: "", l: "Website projects from" },
+            { v: 4, p: "", s: " days", l: "Average go-live" },
+            { v: 100, p: "", s: "%", l: "Mobile responsive" },
+            { v: 2, p: "", s: ".5s", l: "Load time ceiling" },
           ].map((s, i) => (
             <Reveal key={s.l} delay={i * 0.06}>
-              <Stat value={s.v} suffix={s.s} label={s.l} />
+              <Stat value={s.v} prefix={s.p} suffix={s.s} label={s.l} />
             </Reveal>
           ))}
         </div>
@@ -244,7 +249,7 @@ function Index() {
 
       {/* ---------- CAPABILITIES ---------- */}
       <section id="capabilities" className="mx-auto max-w-6xl px-5 py-24">
-        <Reveal>
+        <Reveal x={-34} y={12}>
           <Eyebrow>What's under the hood</Eyebrow>
           <h2 className="mt-6 max-w-2xl font-display text-[clamp(2rem,4.6vw,3.4rem)] font-semibold leading-[1.02] tracking-[-0.035em]">
             Every build ships with the things your competitors skipped.
@@ -268,7 +273,7 @@ function Index() {
 
       {/* ---------- PROCESS ---------- */}
       <section id="process" className="relative mx-auto max-w-6xl px-5 py-24">
-        <Reveal>
+        <Reveal x={34} y={12}>
           <Eyebrow>The process</Eyebrow>
           <h2 className="mt-6 max-w-2xl font-display text-[clamp(2rem,4.6vw,3.4rem)] font-semibold leading-[1.02] tracking-[-0.035em]">
             Four steps. No agency theatre.
@@ -292,7 +297,7 @@ function Index() {
 
       {/* ---------- PRICING ---------- */}
       <section id="pricing" className="mx-auto max-w-6xl px-5 py-24">
-        <Reveal>
+        <Reveal x={-34} y={12}>
           <Eyebrow>Pricing</Eyebrow>
           <h2 className="mt-6 max-w-2xl font-display text-[clamp(2rem,4.6vw,3.4rem)] font-semibold leading-[1.02] tracking-[-0.035em]">
             Flat prices. Written scope. No surprises.
@@ -329,7 +334,7 @@ function Index() {
                   ))}
                 </ul>
                 <a
-                  href={MAILTO}
+                  href={t.name === "Conversion Sprint" ? SPRINT_MAILTO : MAILTO}
                   className={`btn-sheen mt-9 rounded-full px-5 py-3 text-center text-sm font-medium transition-transform duration-300 hover:scale-[1.03] ${
                     t.highlight
                       ? "bg-primary text-primary-foreground"
@@ -346,7 +351,7 @@ function Index() {
 
       {/* ---------- FAQ ---------- */}
       <section id="faq" className="mx-auto max-w-6xl px-5 py-24">
-        <Reveal className="text-center">
+        <Reveal y={36} scale={0.97} className="text-center">
           <Eyebrow>Questions & answers</Eyebrow>
           <h2 className="mx-auto mt-6 max-w-2xl font-display text-[clamp(2rem,4.6vw,3.4rem)] font-semibold leading-[1.02] tracking-[-0.035em]">
             Everything people ask before they say yes.
@@ -359,7 +364,7 @@ function Index() {
 
       {/* ---------- CONTACT ---------- */}
       <section id="contact" className="mx-auto max-w-6xl px-5 pb-32 pt-10">
-        <Reveal>
+        <Reveal y={42} scale={0.96}>
           <GlassCard tilt={false} className="overflow-hidden p-10 text-center md:p-20">
             <div className="grid-bg pointer-events-none absolute inset-0" aria-hidden />
             <div className="relative">
