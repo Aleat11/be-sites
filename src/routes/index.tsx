@@ -334,7 +334,7 @@ function Index() {
                   ))}
                 </ul>
                 <a
-                  href={MAILTO}
+                  href={t.name === "Conversion Sprint" ? SPRINT_MAILTO : MAILTO}
                   className={`btn-sheen mt-9 rounded-full px-5 py-3 text-center text-sm font-medium transition-transform duration-300 hover:scale-[1.03] ${
                     t.highlight
                       ? "bg-primary text-primary-foreground"

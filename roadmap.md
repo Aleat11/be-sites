@@ -4,4 +4,4 @@
 - [x] Lower the 3D logo bracket sides to match the supplied logo.
 - [x] Update opening copy, pricing message, and calls to action.
 - [x] Add strategic, creative scroll reveals across the page.
-- [ ] Verify the final page on desktop and mobile.
+- [x] Verify the final page on desktop and mobile.
