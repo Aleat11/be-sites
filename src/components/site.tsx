@@ -109,7 +109,17 @@ export function Eyebrow({ children }: { children: ReactNode }) {
 }
 
 /* Count-up stat */
-export function Stat({ value, suffix = "", label }: { value: number; suffix?: string; label: string }) {
+export function Stat({
+  value,
+  prefix = "",
+  suffix = "",
+  label,
+}: {
+  value: number;
+  prefix?: string;
+  suffix?: string;
+  label: string;
+}) {
   const [n, setN] = useState(0);
   const started = useRef(false);
 
@@ -128,7 +138,8 @@ export function Stat({ value, suffix = "", label }: { value: number; suffix?: st
   return (
     <motion.div viewport={{ once: true, amount: 0.4 }} onViewportEnter={run}>
       <div className="font-display text-4xl font-semibold tracking-tight md:text-5xl">
-        {n}
+        <span className="text-accent">{prefix}</span>
+        {n.toLocaleString()}
         <span className="text-accent">{suffix}</span>
       </div>
       <div className="mt-1 font-mono text-[11px] uppercase tracking-[0.18em] text-muted-foreground">

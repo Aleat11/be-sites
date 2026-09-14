@@ -156,7 +156,7 @@ function Index() {
             href={MAILTO}
             className="btn-sheen ml-auto rounded-full bg-primary px-4 py-2 text-sm font-medium text-primary-foreground transition-transform duration-300 hover:scale-[1.04] md:ml-0"
           >
-            Start a build
+            Discuss my website
           </a>
         </nav>
       </header>
@@ -178,7 +178,7 @@ function Index() {
           </Reveal>
           <Reveal delay={0.08}>
             <h1 className="mx-auto mt-7 max-w-5xl font-display text-[clamp(2.5rem,7vw,5.7rem)] font-semibold leading-[0.98] tracking-[-0.04em]">
-              <span className="text-gradient">Websites that make it easier for local customers to request a quote.</span>
+              <span className="text-foreground">Websites that make it easier for local customers to request a quote.</span>
             </h1>
           </Reveal>
           <Reveal delay={0.16}>
@@ -235,13 +235,13 @@ function Index() {
       <section className="mx-auto max-w-6xl px-5 py-24">
         <div className="grid grid-cols-2 gap-10 md:grid-cols-4">
           {[
-            { v: 3500, s: "$", l: "Website projects from" },
-            { v: 4, s: " days", l: "Average go-live" },
-            { v: 100, s: "%", l: "Mobile responsive" },
-            { v: 2, s: ".5s", l: "Load time ceiling" },
+            { v: 3500, p: "$", s: "", l: "Website projects from" },
+            { v: 4, p: "", s: " days", l: "Average go-live" },
+            { v: 100, p: "", s: "%", l: "Mobile responsive" },
+            { v: 2, p: "", s: ".5s", l: "Load time ceiling" },
           ].map((s, i) => (
             <Reveal key={s.l} delay={i * 0.06}>
-              <Stat value={s.v} suffix={s.s} label={s.l} />
+              <Stat value={s.v} prefix={s.p} suffix={s.s} label={s.l} />
             </Reveal>
           ))}
         </div>
