@@ -77,18 +77,18 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "Be-Sites — Small Business Websites, Built Fast" },
+      { title: "Be-Sites — Websites for Home-Service Businesses" },
       {
         name: "description",
         content:
-          "Be-Sites builds fast, mobile-first small business websites with local SEO built in. From $899, live in days.",
+          "Be-Sites builds clear, fast websites for established home-service businesses. Projects from $3,500.",
       },
       { name: "author", content: "Be-Sites" },
-      { property: "og:title", content: "Be-Sites — Small Business Websites, Built Fast" },
+      { property: "og:title", content: "Be-Sites — Websites for Home-Service Businesses" },
       {
         property: "og:description",
         content:
-          "Fast, mobile-first small business websites with local SEO built in. From $899, live in days.",
+          "Clear, fast websites with service pages, proof, and a tested inquiry process. Projects from $3,500.",
       },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },

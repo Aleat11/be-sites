@@ -249,7 +249,7 @@ function Index() {
 
       {/* ---------- CAPABILITIES ---------- */}
       <section id="capabilities" className="mx-auto max-w-6xl px-5 py-24">
-        <Reveal>
+        <Reveal x={-34} y={12}>
           <Eyebrow>What's under the hood</Eyebrow>
           <h2 className="mt-6 max-w-2xl font-display text-[clamp(2rem,4.6vw,3.4rem)] font-semibold leading-[1.02] tracking-[-0.035em]">
             Every build ships with the things your competitors skipped.
@@ -273,7 +273,7 @@ function Index() {
 
       {/* ---------- PROCESS ---------- */}
       <section id="process" className="relative mx-auto max-w-6xl px-5 py-24">
-        <Reveal>
+        <Reveal x={34} y={12}>
           <Eyebrow>The process</Eyebrow>
           <h2 className="mt-6 max-w-2xl font-display text-[clamp(2rem,4.6vw,3.4rem)] font-semibold leading-[1.02] tracking-[-0.035em]">
             Four steps. No agency theatre.
@@ -297,7 +297,7 @@ function Index() {
 
       {/* ---------- PRICING ---------- */}
       <section id="pricing" className="mx-auto max-w-6xl px-5 py-24">
-        <Reveal>
+        <Reveal x={-34} y={12}>
           <Eyebrow>Pricing</Eyebrow>
           <h2 className="mt-6 max-w-2xl font-display text-[clamp(2rem,4.6vw,3.4rem)] font-semibold leading-[1.02] tracking-[-0.035em]">
             Flat prices. Written scope. No surprises.
@@ -351,7 +351,7 @@ function Index() {
 
       {/* ---------- FAQ ---------- */}
       <section id="faq" className="mx-auto max-w-6xl px-5 py-24">
-        <Reveal className="text-center">
+        <Reveal y={36} scale={0.97} className="text-center">
           <Eyebrow>Questions & answers</Eyebrow>
           <h2 className="mx-auto mt-6 max-w-2xl font-display text-[clamp(2rem,4.6vw,3.4rem)] font-semibold leading-[1.02] tracking-[-0.035em]">
             Everything people ask before they say yes.
@@ -364,7 +364,7 @@ function Index() {
 
       {/* ---------- CONTACT ---------- */}
       <section id="contact" className="mx-auto max-w-6xl px-5 pb-32 pt-10">
-        <Reveal>
+        <Reveal y={42} scale={0.96}>
           <GlassCard tilt={false} className="overflow-hidden p-10 text-center md:p-20">
             <div className="grid-bg pointer-events-none absolute inset-0" aria-hidden />
             <div className="relative">
