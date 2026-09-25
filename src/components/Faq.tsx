@@ -5,15 +5,11 @@ import { GlassCard } from "./site";
 export const faqs = [
   {
     q: "What is included in a website project?",
-    a: "Every project is scoped around your business, services, proof, and inquiry process. You receive a clear written scope, agreed milestones, a fast mobile experience, and ownership at handoff. Website projects start at $3,500.",
+    a: "Every project is scoped around your business, services, proof, and inquiry process. You receive a clear written scope, agreed milestones, a fast mobile experience, and ownership at handoff. A 1–3 page website is a flat $850.",
   },
   {
     q: "How long does a website project take?",
     a: "Your written scope includes a clear timeline and milestones before work begins. Timing depends on the number of services, available content, and review rounds, so expectations are agreed upfront.",
-  },
-  {
-    q: "What is the $750 Website Conversion Sprint?",
-    a: "It is a focused engagement for one priority problem on an existing website. We review the conversion path, improve the most important page or interaction, complete a mobile quality pass, and leave you with clear next steps.",
   },
   {
     q: "Do I need to pay for hosting?",

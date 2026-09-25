@@ -1,5 +1,5 @@
 import { createFileRoute, ClientOnly } from "@tanstack/react-router";
-import { lazy, Suspense } from "react";
+import { lazy, Suspense, useState, type FormEvent } from "react";
 import logo from "@/assets/logo.png.asset.json";
 import { CursorGlow, Eyebrow, GlassCard, Kinetic, Reveal, Stat } from "@/components/site";
 import { Faq, faqs } from "@/components/Faq";
@@ -15,7 +15,7 @@ export const Route = createFileRoute("/")({
       {
         name: "description",
         content:
-          "Be-Sites builds clear, fast websites for established home-service businesses. Website projects from $3,500.",
+          "Be-Sites builds clear, fast websites for established home-service businesses. $850 flat for 1–3 page websites.",
       },
       { property: "og:title", content: "Be-Sites — Websites that turn local visits into inquiries" },
       {
@@ -24,9 +24,29 @@ export const Route = createFileRoute("/")({
           "Clear, fast websites for established home-service businesses, with service pages, proof, and a tested inquiry process.",
       },
       { property: "og:type", content: "website" },
+      { property: "og:url", content: "https://be-sites-web.vercel.app/" },
+      { property: "og:image", content: "https://be-sites-web.vercel.app/favicon.png" },
       { name: "twitter:card", content: "summary_large_image" },
+      { name: "twitter:image", content: "https://be-sites-web.vercel.app/favicon.png" },
+    ],
+    links: [
+      { rel: "canonical", href: "https://be-sites-web.vercel.app/" },
     ],
     scripts: [
+      {
+        type: "application/ld+json",
+        children: JSON.stringify({
+          "@context": "https://schema.org",
+          "@type": "ProfessionalService",
+          name: "Be-Sites",
+          url: "https://be-sites-web.vercel.app/",
+          description:
+            "Be-Sites builds clear, fast websites for established home-service businesses. $850 flat for 1–3 page websites.",
+          email: "antwane.leater@be-extraordinary.site",
+          priceRange: "$850 - $1,799",
+          areaServed: "United States",
+        }),
+      },
       {
         type: "application/ld+json",
         children: JSON.stringify({
@@ -44,10 +64,34 @@ export const Route = createFileRoute("/")({
   component: Index,
 });
 
-const MAILTO =
-  "mailto:antwane.leater@be-extraordinary.site?subject=Website%20enquiry%20—%20Be-Sites&body=Tell%20us%20about%20your%20business%20and%20we%27ll%20send%20back%20a%20free%20homepage%20mockup.";
-const SPRINT_MAILTO =
-  "mailto:antwane.leater@be-extraordinary.site?subject=Website%20Conversion%20Sprint%20—%20Be-Sites";
+const CONTACT_EMAIL = "antwane.leater@be-extraordinary.site";
+const LEAD_ENDPOINT = "https://be-sites-lead-form.vercel.app/api/submit";
+const SUCCESS_MSG =
+  "Request received. If it's a fit, we'll call you within one business day.";
+
+const TRADES = [
+  "Plumbing",
+  "Electrical",
+  "HVAC",
+  "Roofing",
+  "Landscaping",
+  "Concrete",
+  "Remodeling",
+  "Handyman",
+  "Tree Service",
+  "Fencing",
+  "Garage Doors",
+  "Painting",
+  "Pest Control",
+  "Other trade",
+];
+
+const TIMELINES = [
+  "ASAP — ready to start now",
+  "Within 2 weeks",
+  "Within a month",
+  "Just researching",
+];
 
 const nav = [
   { label: "Work", href: "#capabilities" },
@@ -98,18 +142,18 @@ const process = [
 
 const tiers = [
   {
-    name: "Conversion Sprint",
-    price: "$750",
-    note: "fixed scope",
-    highlight: false,
-    points: ["One priority problem", "Conversion review", "Focused page improvements", "Inquiry-path cleanup", "Mobile quality pass", "Clear next-step plan"],
+    name: "Website Build",
+    price: "$850",
+    note: "1–3 pages, flat",
+    highlight: true,
+    points: ["1–3 page custom website", "Proof and trust sections", "Tested inquiry process", "Fast mobile experience", "Written scope + milestones", "Ownership at handoff"],
   },
   {
-    name: "Website Build",
-    price: "$3,500",
-    note: "projects from",
-    highlight: true,
-    points: ["Clear service pages", "Proof and trust sections", "Tested inquiry process", "Fast mobile experience", "Written scope + milestones", "Ownership at handoff"],
+    name: "Growth",
+    price: "$1,799",
+    note: "up to 8 pages",
+    highlight: false,
+    points: ["Up to 8 custom pages", "Everything in Website Build", "Blog and articles setup", "Advanced on-page SEO", "Review and referral funnels", "Quarterly strategy call"],
   },
   {
     name: "Care Plan",
@@ -130,6 +174,113 @@ const marquee = [
   "CONTRACTORS",
   "STUDIOS",
 ];
+
+const inputCls =
+  "glass-soft w-full rounded-xl px-5 py-3.5 text-sm outline-none transition-shadow duration-300 placeholder:text-muted-foreground focus:shadow-[0_0_0_2px_var(--color-ring)]";
+const labelCls =
+  "mb-1.5 block text-left font-mono text-[11px] uppercase tracking-[0.18em] text-muted-foreground";
+
+function QuoteForm() {
+  const [status, setStatus] = useState<"idle" | "sending" | "done" | "error">("idle");
+  const [error, setError] = useState("");
+
+  async function onSubmit(e: FormEvent<HTMLFormElement>) {
+    e.preventDefault();
+    setStatus("sending");
+    setError("");
+    const fd = new FormData(e.currentTarget);
+    const payload = {
+      businessName: String(fd.get("businessName") || ""),
+      trade: String(fd.get("trade") || ""),
+      phone: String(fd.get("phone") || ""),
+      email: String(fd.get("email") || ""),
+      timeline: String(fd.get("timeline") || ""),
+      message: String(fd.get("message") || ""),
+    };
+    try {
+      const res = await fetch(LEAD_ENDPOINT, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload),
+      });
+      const data = await res.json().catch(() => ({}));
+      if (res.ok && (data.ok || data.duplicate)) {
+        setStatus("done");
+      } else {
+        setError(data.error || "Could not save your request. Please try again.");
+        setStatus("error");
+      }
+    } catch {
+      setError("Something went wrong. Please try again.");
+      setStatus("error");
+    }
+  }
+
+  if (status === "done") {
+    return (
+      <p className="mx-auto mt-10 max-w-md rounded-2xl border border-accent/40 bg-accent/10 px-6 py-5 text-sm leading-relaxed text-foreground">
+        {SUCCESS_MSG}
+      </p>
+    );
+  }
+
+  return (
+    <form onSubmit={onSubmit} className="mx-auto mt-10 grid max-w-2xl gap-4 text-left sm:grid-cols-2">
+      <div>
+        <label className={labelCls} htmlFor="qf-business">Business name *</label>
+        <input id="qf-business" name="businessName" required placeholder="Acme Plumbing Co." className={inputCls} />
+      </div>
+      <div>
+        <label className={labelCls} htmlFor="qf-trade">Trade *</label>
+        <select id="qf-trade" name="trade" required defaultValue="" className={inputCls}>
+          <option value="" disabled>Select your trade…</option>
+          {TRADES.map((t) => (
+            <option key={t} value={t}>{t}</option>
+          ))}
+        </select>
+      </div>
+      <div>
+        <label className={labelCls} htmlFor="qf-phone">Phone *</label>
+        <input id="qf-phone" name="phone" type="tel" required placeholder="(555) 123-4567" className={inputCls} />
+      </div>
+      <div>
+        <label className={labelCls} htmlFor="qf-email">Email *</label>
+        <input id="qf-email" name="email" type="email" required placeholder="you@business.com" className={inputCls} />
+      </div>
+      <div className="sm:col-span-2">
+        <label className={labelCls} htmlFor="qf-timeline">When do you want to go live? *</label>
+        <select id="qf-timeline" name="timeline" required defaultValue="" className={inputCls}>
+          <option value="" disabled>Select…</option>
+          {TIMELINES.map((t) => (
+            <option key={t} value={t}>{t}</option>
+          ))}
+        </select>
+      </div>
+      <div className="sm:col-span-2">
+        <label className={labelCls} htmlFor="qf-needs">What do you need? (optional)</label>
+        <textarea
+          id="qf-needs"
+          name="message"
+          rows={3}
+          placeholder="Services, service area, anything we should know…"
+          className={`${inputCls} resize-none`}
+        />
+      </div>
+      {status === "error" && (
+        <p className="text-sm text-red-400 sm:col-span-2">{error}</p>
+      )}
+      <div className="sm:col-span-2">
+        <button
+          type="submit"
+          disabled={status === "sending"}
+          className="btn-sheen w-full rounded-full bg-primary px-6 py-4 text-sm font-medium text-primary-foreground transition-transform duration-300 hover:scale-[1.02] disabled:opacity-60 sm:w-auto sm:px-10"
+        >
+          {status === "sending" ? "Sending…" : "Request my quote"}
+        </button>
+      </div>
+    </form>
+  );
+}
 
 function Index() {
   return (
@@ -153,10 +304,10 @@ function Index() {
             ))}
           </ul>
           <a
-            href={MAILTO}
+            href="#contact"
             className="btn-sheen ml-auto rounded-full bg-primary px-4 py-2 text-sm font-medium text-primary-foreground transition-transform duration-300 hover:scale-[1.04] md:ml-0"
           >
-            Discuss my website
+            Request a quote
           </a>
         </nav>
       </header>
@@ -188,28 +339,20 @@ function Index() {
                 service pages, proof, and a tested inquiry process.
               </p>
               <p className="text-sm text-foreground/70 md:text-base">
-                Website projects from <span className="font-medium text-foreground">$3,500</span>.
-                Written scope, clear milestones, and ownership at handoff.
+                <span className="font-medium text-foreground">$850 flat</span> for a 1–3 page
+                website. Written scope, clear milestones, and ownership at handoff.
               </p>
             </div>
           </Reveal>
           <Reveal delay={0.24}>
             <div className="mt-10 flex flex-wrap items-center justify-center gap-3">
               <a
-                href={MAILTO}
+                href="#contact"
                 className="btn-sheen rounded-full bg-primary px-7 py-3.5 text-sm font-medium text-primary-foreground transition-transform duration-300 hover:scale-[1.04]"
               >
-                Discuss my website
+                Request a quote
               </a>
             </div>
-          </Reveal>
-          <Reveal delay={0.3}>
-            <p className="mt-5 text-sm text-foreground/70">
-              Need one problem fixed first?{" "}
-              <a href={SPRINT_MAILTO} className="font-medium text-foreground underline decoration-accent/60 underline-offset-4 transition-colors hover:text-accent">
-                Explore the $750 Website Conversion Sprint.
-              </a>
-            </p>
           </Reveal>
         </div>
 
@@ -235,7 +378,7 @@ function Index() {
       <section className="mx-auto max-w-6xl px-5 py-24">
         <div className="grid grid-cols-2 gap-10 md:grid-cols-4">
           {[
-            { v: 3500, p: "$", s: "", l: "Website projects from" },
+            { v: 850, p: "$", s: "", l: "Flat, 1–3 page websites" },
             { v: 4, p: "", s: " days", l: "Average go-live" },
             { v: 100, p: "", s: "%", l: "Mobile responsive" },
             { v: 2, p: "", s: ".5s", l: "Load time ceiling" },
@@ -251,7 +394,7 @@ function Index() {
       <section id="capabilities" className="mx-auto max-w-6xl px-5 py-24">
         <Reveal x={-34} y={12}>
           <Eyebrow>What's under the hood</Eyebrow>
-          <h2 className="mt-6 max-w-2xl font-display text-[clamp(2rem,4.6vw,3.4rem)] font-semibold leading-[1.02] tracking-[-0.035em]">
+          <h2 className="mt-6 max-w-2xl font-display text-accent text-[clamp(2rem,4.6vw,3.4rem)] font-semibold leading-[1.02] tracking-[-0.035em]">
             Every build ships with the things your competitors skipped.
           </h2>
         </Reveal>
@@ -275,7 +418,7 @@ function Index() {
       <section id="process" className="relative mx-auto max-w-6xl px-5 py-24">
         <Reveal x={34} y={12}>
           <Eyebrow>The process</Eyebrow>
-          <h2 className="mt-6 max-w-2xl font-display text-[clamp(2rem,4.6vw,3.4rem)] font-semibold leading-[1.02] tracking-[-0.035em]">
+          <h2 className="mt-6 max-w-2xl font-display text-accent text-[clamp(2rem,4.6vw,3.4rem)] font-semibold leading-[1.02] tracking-[-0.035em]">
             Four steps. No agency theatre.
           </h2>
         </Reveal>
@@ -299,11 +442,11 @@ function Index() {
       <section id="pricing" className="mx-auto max-w-6xl px-5 py-24">
         <Reveal x={-34} y={12}>
           <Eyebrow>Pricing</Eyebrow>
-          <h2 className="mt-6 max-w-2xl font-display text-[clamp(2rem,4.6vw,3.4rem)] font-semibold leading-[1.02] tracking-[-0.035em]">
+          <h2 className="mt-6 max-w-2xl font-display text-accent text-[clamp(2rem,4.6vw,3.4rem)] font-semibold leading-[1.02] tracking-[-0.035em]">
             Flat prices. Written scope. No surprises.
           </h2>
         </Reveal>
-        <div className="mt-14 grid gap-4 md:grid-cols-3">
+        <div className="mx-auto mt-14 grid max-w-6xl gap-4 md:grid-cols-3">
           {tiers.map((t, i) => (
             <Reveal key={t.name} delay={i * 0.08} className="h-full">
               <GlassCard
@@ -334,7 +477,7 @@ function Index() {
                   ))}
                 </ul>
                 <a
-                  href={t.name === "Conversion Sprint" ? SPRINT_MAILTO : MAILTO}
+                  href="#contact"
                   className={`btn-sheen mt-9 rounded-full px-5 py-3 text-center text-sm font-medium transition-transform duration-300 hover:scale-[1.03] ${
                     t.highlight
                       ? "bg-primary text-primary-foreground"
@@ -353,7 +496,7 @@ function Index() {
       <section id="faq" className="mx-auto max-w-6xl px-5 py-24">
         <Reveal y={36} scale={0.97} className="text-center">
           <Eyebrow>Questions & answers</Eyebrow>
-          <h2 className="mx-auto mt-6 max-w-2xl font-display text-[clamp(2rem,4.6vw,3.4rem)] font-semibold leading-[1.02] tracking-[-0.035em]">
+          <h2 className="mx-auto mt-6 max-w-2xl font-display text-accent text-[clamp(2rem,4.6vw,3.4rem)] font-semibold leading-[1.02] tracking-[-0.035em]">
             Everything people ask before they say yes.
           </h2>
         </Reveal>
@@ -368,42 +511,15 @@ function Index() {
           <GlassCard tilt={false} className="overflow-hidden p-10 text-center md:p-20">
             <div className="grid-bg pointer-events-none absolute inset-0" aria-hidden />
             <div className="relative">
-              <h2 className="mx-auto max-w-2xl font-display text-[clamp(2.1rem,5.5vw,4rem)] font-semibold leading-[0.98] tracking-[-0.04em]">
-                Let's put your business{" "}
-                <span className="text-accent">on the map.</span>
+              <h2 className="mx-auto max-w-2xl font-display text-accent text-[clamp(2.1rem,5.5vw,4rem)] font-semibold leading-[0.98] tracking-[-0.04em]">
+                Ready for a website that{" "}
+                <span className="text-accent">brings in jobs?</span>
               </h2>
               <p className="mx-auto mt-6 max-w-md text-sm leading-relaxed text-muted-foreground">
-                Tell us about the business and we'll send back a free homepage mockup — before you
-                pay a cent.
+                Flat $850 for a 1–3 page site. Send your details — if it's a fit, we'll call you
+                within one business day.
               </p>
-              <form
-                className="mx-auto mt-10 flex max-w-md flex-col gap-3 sm:flex-row"
-                onSubmit={(e) => {
-                  e.preventDefault();
-                  const value = (
-                    e.currentTarget.elements.namedItem("email") as HTMLInputElement
-                  ).value;
-                  window.location.href = `${MAILTO}%0A%0AMy%20email:%20${encodeURIComponent(value)}`;
-                }}
-              >
-
-                <label className="sr-only" htmlFor="email">
-                  Email address
-                </label>
-                <input
-                  id="email"
-                  type="email"
-                  required
-                  placeholder="you@business.com"
-                  className="glass-soft flex-1 rounded-full px-5 py-3.5 text-sm outline-none transition-shadow duration-300 placeholder:text-muted-foreground focus:shadow-[0_0_0_2px_var(--color-ring)]"
-                />
-                <button
-                  type="submit"
-                  className="btn-sheen rounded-full bg-primary px-6 py-3.5 text-sm font-medium text-primary-foreground transition-transform duration-300 hover:scale-[1.04]"
-                >
-                  Request mockup
-                </button>
-              </form>
+              <QuoteForm />
             </div>
           </GlassCard>
         </Reveal>
@@ -416,7 +532,13 @@ function Index() {
             <img src={logo.url} alt="Be-Sites" className="h-7 w-7 rounded-md object-cover" />
             <span className="font-display text-sm font-semibold tracking-tight">Be-Sites</span>
           </div>
-          <p className="text-xs text-muted-foreground md:ml-auto">
+          <a
+            href={`mailto:${CONTACT_EMAIL}`}
+            className="text-xs text-muted-foreground transition-colors hover:text-foreground md:ml-auto"
+          >
+            {CONTACT_EMAIL}
+          </a>
+          <p className="text-xs text-muted-foreground">
             © {new Date().getFullYear()} Be-Sites. Built fast, built to be found.
           </p>
         </div>

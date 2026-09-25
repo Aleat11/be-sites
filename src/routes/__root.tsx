@@ -81,14 +81,14 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       {
         name: "description",
         content:
-          "Be-Sites builds clear, fast websites for established home-service businesses. Projects from $3,500.",
+          "Be-Sites builds clear, fast websites for established home-service businesses. $850 flat for 1–3 page websites.",
       },
       { name: "author", content: "Be-Sites" },
       { property: "og:title", content: "Be-Sites — Websites for Home-Service Businesses" },
       {
         property: "og:description",
         content:
-          "Clear, fast websites with service pages, proof, and a tested inquiry process. Projects from $3,500.",
+          "Clear, fast websites with service pages, proof, and a tested inquiry process. $850 flat for 1–3 page websites.",
       },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
