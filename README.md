@@ -1,26 +1,30 @@
-# Be Sites Labs
+# Be-Sites
 
-make a very high quality techy website for my website company called be sites as in logo uploaded. go heavy on effects such as glassmorphism, micro interactions, interactive 3d/webgl, kinetic typography hover reveals etc. very high quality. add a queston answeer section
+Marketing site for **Be-Sites** — fast, SEO-ready websites for home-service businesses.
 
-This project was built with [Lovable](https://lovable.dev).
+**Live:** https://be-sites-web.vercel.app
 
-**Live app**: https://be-sites.lovable.app
+## Offer
 
-## Build with Lovable
+- **Starter** — $850 flat, 1–3 pages
+- **Growth** — $1,799, up to 8 pages
+- **Care Plan** — $79/mo
 
-Continue developing this project in the [Lovable editor](https://lovable.dev/projects/3dc51f29-6fa8-4317-8f60-cb786958814f).
-
-- **Ship faster**: describe what you want to build and Lovable handles the code.
-- **Stay in sync**: every change made in Lovable is committed straight to this repository.
-- **Full ownership**: this code is yours. Push to `main` on GitHub and your changes sync back into Lovable, ready for your next prompt.
+The quote form posts to the lead endpoint and feeds the CRM + Google Sheet pipeline. No free mockups — hot leads only.
 
 ## Development
 
-Prefer working locally? You need Node.js and npm — [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating).
+Node.js + bun. Install deps and run the dev server:
 
 ```sh
-git clone <this-repository-url>
-cd <repository-name>
-npm i
-npm run dev
+bun install
+bun run dev
 ```
+
+Build:
+
+```sh
+bun run build
+```
+
+Deploys to Vercel (`be-sites-web`) via `deploy-vercel.py` (local helper, not committed).
